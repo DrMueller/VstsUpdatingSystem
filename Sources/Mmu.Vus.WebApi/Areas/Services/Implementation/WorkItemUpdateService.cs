@@ -34,6 +34,11 @@ namespace Mmu.Vus.WebApi.Areas.Services.Implementation
             var wiql = new Wiql { Query = wiqlQuery };
             var queryResult = await witClient.QueryByWiqlAsync(wiql);
             var workItemIds = queryResult.WorkItems.Select(f => f.Id).ToList();
+            
+            if (!workItemIds.Any())
+            {
+                return new List<WorkItem>();    
+            }
 
             var result = await witClient.GetWorkItemsAsync(workItemIds);
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Mmu.Vus.WebApi.Areas.Dtos;
@@ -34,13 +35,17 @@ namespace Mmu.Vus.WebApi.Areas.Controllers
             }
             catch (Exception ex)
             {
+                var sb = new StringBuilder();
+
                 var innerEx = ex;
+                sb.AppendLine(innerEx.Message);
                 while (innerEx.InnerException != null)
                 {
+                    sb.AppendLine(innerEx.Message);
                     innerEx = innerEx.InnerException;
                 }
 
-                var str = innerEx.Message + ": " + innerEx.StackTrace;
+                var str = sb + ": " + innerEx.StackTrace;
                 return Ok(str);
             }
         }
