@@ -16,6 +16,8 @@ namespace Mmu.Vus.WebApi.Areas.Controllers
             _workItemUpdateService = workItemUpdateService;
         }
 
+        [HttpGet]
+        [Route("HelloWorld")]
         public IHttpActionResult Get()
         {
             return Ok("Hello World");
