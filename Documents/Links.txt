@@ -1,0 +1,3 @@
+https://blog.joergbattermann.com/2016/04/13/vsts-tfs-rest-api-03-authentication/
+https://docs.microsoft.com/en-us/aspnet/web-api/overview/data/using-web-api-with-entity-framework/part-2
+https://docs.microsoft.com/en-us/aspnet/web-api/overview/advanced/dependency-injection 

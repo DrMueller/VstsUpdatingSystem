@@ -1,0 +1,1 @@
+"C:\Users\matthias.mueller\Desktop\Stuff\Work\nuget.exe" restore "C:\MyGit\Personal\VstsUpdatingSystem\VUS.sln"
