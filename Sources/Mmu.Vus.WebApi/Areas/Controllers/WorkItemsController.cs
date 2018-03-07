@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Web.Http;
 using Mmu.Vus.WebApi.Areas.Dtos;
 using Mmu.Vus.WebApi.Areas.Services;
-using Mmu.Vus.WebApi.Areas.Services.Implementation;
 
 namespace Mmu.Vus.WebApi.Areas.Controllers
 {
@@ -16,12 +16,31 @@ namespace Mmu.Vus.WebApi.Areas.Controllers
             _workItemUpdateService = workItemUpdateService;
         }
 
+        public IHttpActionResult Get()
+        {
+            return Ok("Hello World");
+        }
+
         [HttpPost]
         [Route("UpdateVersions")]
         public async Task<IHttpActionResult> UpdateVersionsAsync([FromBody] UpdateWorkItemsDto dto)
         {
-            await _workItemUpdateService.UpdateWorkItemsAsync(dto.VersionNumber);
-            return Ok();
+            try
+            {
+                await _workItemUpdateService.UpdateWorkItemsAsync(dto.VersionNumber);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                var innerEx = ex;
+                while (innerEx.InnerException != null)
+                {
+                    innerEx = innerEx.InnerException;
+                }
+
+                var str = innerEx.Message + ": " + innerEx.StackTrace;
+                return Ok(str);
+            }
         }
     }
 }
