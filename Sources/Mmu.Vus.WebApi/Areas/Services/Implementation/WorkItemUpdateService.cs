@@ -30,7 +30,7 @@ namespace Mmu.Vus.WebApi.Areas.Services.Implementation
 
         private static async Task<IReadOnlyCollection<WorkItem>> GetWorkItemsReadyToMergeAsync(WorkItemTrackingHttpClient witClient)
         {
-            var wiqlQuery = $"SELECT [System.Id],[System.WorkItemType],[System.Title],[System.AssignedTo],[System.State],[System.Tags] FROM WorkItems WHERE [System.State] = '{TfsStateMergedToMaster}' AND ScrumforHeroAG.DeployedVersion = ''";
+            var wiqlQuery = $"SELECT [System.Id],[System.WorkItemType],[System.Title],[System.AssignedTo],[System.State],[System.Tags] FROM WorkItems WHERE [System.State] = '{TfsStateMergedToMaster}' AND ScrumforHeroAG.VersionDeployed = ''";
             var wiql = new Wiql { Query = wiqlQuery };
             var queryResult = await witClient.QueryByWiqlAsync(wiql);
             var workItemIds = queryResult.WorkItems.Select(f => f.Id).ToList();
@@ -52,7 +52,7 @@ namespace Mmu.Vus.WebApi.Areas.Services.Implementation
                 new JsonPatchOperation
                 {
                     Operation = Operation.Add,
-                    Path = "/fields/ScrumforHeroAG.DeployedVersion",
+                    Path = "/fields/ScrumforHeroAG.VersionDeployed",
                     Value = version
                 }
             };
