@@ -17,7 +17,7 @@ namespace Mmu.Vus.WebApi.Areas.Services.Implementation
         private const string PersonalAccessToken = "dqje4rk6kmvi7qfmyq2fipll6cdk5uqlolzp2pxguhpynxd6r35a";
         private const string TfsStateMergedToMaster = "Merged to Master";
 
-        public async Task UpdateWorkItemsAsync(float version)
+        public async Task UpdateWorkItemsAsync(string version)
         {
             var connection = new VssConnection(new Uri(BaseUrl), new VssBasicCredential(string.Empty, PersonalAccessToken));
             var witClient = connection.GetClient<WorkItemTrackingHttpClient>();
@@ -45,7 +45,7 @@ namespace Mmu.Vus.WebApi.Areas.Services.Implementation
             return result;
         }
 
-        private static async Task UpdateWorkItemAsync(WorkItem workItem, float version, WorkItemTrackingHttpClientBase witClient)
+        private static async Task UpdateWorkItemAsync(WorkItem workItem, string version, WorkItemTrackingHttpClientBase witClient)
         {
             var jsonPatchDocument = new JsonPatchDocument
             {
