@@ -14,7 +14,7 @@ namespace Mmu.Vus.WebApi.Areas.Services.Implementation
     public class WorkItemUpdateService : IWorkItemUpdateService
     {
         private const string BaseUrl = "https://drmueller.visualstudio.com/";
-        private const string PersonalAccessToken = "6oeknwgibfgwdsm563ft6eajjjqjblxpdzex3rrsvk7kz7wongkq";
+        private const string PersonalAccessToken = "dqje4rk6kmvi7qfmyq2fipll6cdk5uqlolzp2pxguhpynxd6r35a";
         private const string TfsStateMergedToMaster = "Merged to Master";
 
         public async Task UpdateWorkItemsAsync(float version)
@@ -30,7 +30,7 @@ namespace Mmu.Vus.WebApi.Areas.Services.Implementation
 
         private static async Task<IReadOnlyCollection<WorkItem>> GetWorkItemsReadyToMergeAsync(WorkItemTrackingHttpClient witClient)
         {
-            var wiqlQuery = $"SELECT [System.Id],[System.WorkItemType],[System.Title],[System.AssignedTo],[System.State],[System.Tags] FROM WorkItems WHERE  [System.State] = '{TfsStateMergedToMaster}'";
+            var wiqlQuery = $"SELECT [System.Id],[System.WorkItemType],[System.Title],[System.AssignedTo],[System.State],[System.Tags] FROM WorkItems WHERE [System.State] = '{TfsStateMergedToMaster}' AND ScrumforHeroAG.DeployedVersion = ''";
             var wiql = new Wiql { Query = wiqlQuery };
             var queryResult = await witClient.QueryByWiqlAsync(wiql);
             var workItemIds = queryResult.WorkItems.Select(f => f.Id).ToList();
@@ -49,12 +49,6 @@ namespace Mmu.Vus.WebApi.Areas.Services.Implementation
         {
             var jsonPatchDocument = new JsonPatchDocument
             {
-                new JsonPatchOperation
-                {
-                    Operation = Operation.Add,
-                    Path = "/fields/System.State",
-                    Value = "Done"
-                },
                 new JsonPatchOperation
                 {
                     Operation = Operation.Add,
